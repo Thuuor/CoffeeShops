@@ -59,4 +59,5 @@ class ShopsAdapter (var items: ArrayList<Shops>) : RecyclerView.Adapter<ShopsAda
     override fun getItemCount(): Int {
         return items.size
     }
+
 }
