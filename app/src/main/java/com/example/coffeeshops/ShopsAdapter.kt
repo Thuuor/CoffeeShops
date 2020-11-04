@@ -22,25 +22,24 @@ class ShopsAdapter (var items: ArrayList<Shops>) : RecyclerView.Adapter<ShopsAda
         private var imagen: ImageView
         private var tittle: TextView
         private var direccion: TextView
-        private var puntuacion: RatingBar
-        private var numPuntuacion: TextView
-        private var divider: DividerItemDecoration
-        private var button: Button
+        val rb = itemView.findViewById(R.id.ratingBar) as RatingBar
+        val np = itemView.findViewById(R.id.numberRatingBar) as TextView
 
         init {
             imagen = itemView.findViewById(R.id.imageView)
             tittle = itemView.findViewById(R.id.nombreCoffeeShops)
             direccion = itemView.findViewById(R.id.direccionCoffeeShops)
-            puntuacion = itemView.findViewById(R.id.ratingBar)
-            numPuntuacion = itemView.findViewById(R.id.numberRatingBar)
-            button = itemView.findViewById(R.id.button)
-            divider = itemView.findViewById(R.id.divider)
+
         }
 
         fun bindShop(shop: Shops, onClick: (View) -> Unit) = with(itemView) {
             imagen.setImageResource(shop.imagen)
             tittle.setText(shop.tittle)
             direccion.setText(shop.direccion)
+
+            rb.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                np.setText(rb.rating.toDouble().toString())
+            }
 
             setOnClickListener { onClick(itemView) }
         }
@@ -60,4 +59,7 @@ class ShopsAdapter (var items: ArrayList<Shops>) : RecyclerView.Adapter<ShopsAda
         return items.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 }
